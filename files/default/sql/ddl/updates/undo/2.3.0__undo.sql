@@ -13,3 +13,9 @@ ALTER TABLE `hopsworks`.`training_dataset_join` DROP COLUMN `prefix`;
 
 ALTER TABLE `hopsworks`.`serving` DROP COLUMN `docker_resource_config`;
 
+ALTER TABLE `hopsworks`.`serving` RENAME COLUMN `model_path` TO `artifact_path`;
+ALTER TABLE `hopsworks`.`serving` RENAME COLUMN `model_version` TO `version`;
+ALTER TABLE `hopsworks`.`serving` DROP COLUMN `artifact_version`;
+ALTER TABLE `hopsworks`.`serving` DROP COLUMN `transformer`;
+ALTER TABLE `hopsworks`.`serving` DROP COLUMN `transformer_instances`;
+ALTER TABLE `hopsworks`.`serving` DROP COLUMN `inference_logging`;
