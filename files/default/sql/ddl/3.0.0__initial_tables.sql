@@ -1173,6 +1173,7 @@ CREATE TABLE `serving` (
   `inference_logging` int(11) DEFAULT NULL,
   `model_server` int(11) NOT NULL DEFAULT '0',
   `serving_tool` int(11) NOT NULL DEFAULT '0',
+  `enable_triton` tinyint(1) DEFAULT '0',
   `deployed` timestamp DEFAULT NULL,
   `revision` varchar(8) DEFAULT NULL,
   `docker_resource_config` varchar(1000) COLLATE latin1_general_cs DEFAULT NULL,
