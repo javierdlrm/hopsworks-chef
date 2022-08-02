@@ -1,0 +1,7 @@
+DELETE FROM `hopsworks`.`variables` WHERE `id`='kube_docker_cores_fraction';
+
+REPLACE INTO `hopsworks`.`variables`(`id`, `value`, `visibility`) VALUES('kube_serving_max_memory_allocation', "<%= node['kube-hops']['serving_max_memory_allocation'] %>", 1);
+REPLACE INTO `hopsworks`.`variables`(`id`, `value`, `visibility`) VALUES('kube_serving_max_cores_allocation', "<%= node['kube-hops']['serving_max_cores_allocation'] %>", 1);
+REPLACE INTO `hopsworks`.`variables`(`id`, `value`, `visibility`) VALUES('kube_serving_max_gpus_allocation', "<%= node['kube-hops']['serving_max_gpus_allocation'] %>", 1);
+REPLACE INTO `hopsworks`.`variables`(`id`, `value`, `visibility`) VALUES('kube_serving_max_num_instances', "<%= node['kube-hops']['serving_max_num_instances'] %>", 1);
+REPLACE INTO `hopsworks`.`variables`(`id`, `value`, `visibility`) VALUES('kube_serving_min_num_instances', "<%= node['kube-hops']['serving_min_num_instances'] %>", 1);
