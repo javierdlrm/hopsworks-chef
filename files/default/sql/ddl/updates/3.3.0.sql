@@ -385,8 +385,7 @@ ALTER TABLE `hopsworks`.`feature_store_activity`
 ALTER TABLE `hopsworks`.`feature_store_statistic`
     DROP FOREIGN KEY `fg_fk_fss`,
     DROP FOREIGN KEY `fg_ci_fk_fss`,
-    DROP FOREIGN KEY `td_fk_fss`,
-    DROP FOREIGN KEY `inode_fk`;
+    DROP FOREIGN KEY `td_fk_fss`;
 DROP TABLE IF EXISTS `hopsworks`.`feature_store_statistic`;
 
 CREATE TABLE IF NOT EXISTS `feature_group_descriptive_statistics` ( -- many-to-many relationship for legacy feature_group_statistics table
