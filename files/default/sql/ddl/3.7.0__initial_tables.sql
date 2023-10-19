@@ -2495,7 +2495,7 @@ CREATE TABLE IF NOT EXISTS `feature_monitoring_config` (
     `feature_name` VARCHAR(63) COLLATE latin1_general_cs DEFAULT NULL,
     `description` VARCHAR(2000) COLLATE latin1_general_cs DEFAULT NULL,
     `name` VARCHAR(63) COLLATE latin1_general_cs NOT NULL,
-    `is_event_time` BOOLEAN DEFAULT FALSE,
+    `is_event_window` BOOLEAN DEFAULT FALSE,
     `transformed_with_version` INT(11) DEFAULT NULL,
     `feature_monitoring_type` tinyint(4) NOT NULL,
     `scheduler_config_id` INT(11),
