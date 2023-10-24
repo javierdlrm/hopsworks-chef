@@ -520,8 +520,17 @@ default['hopsworks']['commands']['search_fs']['history']['clean_period_as_ms'] =
 default['hopsworks']['commands']['search_fs']['history']['retry'] = 5
 default['hopsworks']['commands']['search_fs']['process']['period_as_ms'] = 1000
 
+##
+## Judge
+##
 default['judge']['image_url'] = "#{node['download_url']}/nginx-stable-bullseye.tar"
 default['judge']['port']      = "1111"
 default['judge']['home']      = "#{node['install']['dir']}/judge"
 default['judge']['etc']       = "#{node['judge']['home']}/etc"
 default['judge']['logs']      = "#{node['judge']['home']}/logs"
+
+##
+## Statistics
+##
+default['hopsworks']['statistics']['statistics_cleaner_batch_size'] = "1000"
+default['hopsworks']['statistics']['statistics_cleaner_interval_ms'] = "900000"

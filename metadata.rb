@@ -1025,6 +1025,16 @@ attribute "hopsworks/jupyter/remote_fs_driver",
 	  :description => "Driver to interact with HOPSFS. Can be hdfscontentsmanager or hopsfsmount. Default is hdfscontentsmanager.",
 	  :type => "string"
 
+# Judge
 attribute "judge/port",
           :description => "Port where the Judge service will be listening on. Default: 5001",
           :type => 'string'
+        
+# Statistics
+attribute "hopsworks/statistics/statistics_cleaner_batch_size",
+        :description => "The maximum number of statistics to be deleted per timer trigger.",
+        :type => "string"
+
+attribute "hopsworks/statistics/statistics_cleaner_interval_ms",
+        :description => "How often the statistics cleaner is triggered.",
+        :type => "string"
