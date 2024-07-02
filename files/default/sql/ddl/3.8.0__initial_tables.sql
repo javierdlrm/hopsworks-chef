@@ -1252,19 +1252,14 @@ CREATE TABLE `serving` (
                            `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
                            `name` varchar(255) COLLATE latin1_general_cs NOT NULL,
                            `description` varchar(1000) COLLATE latin1_general_cs DEFAULT NULL,
-                           `deployed` timestamp DEFAULT NULL,
                            `local_port` int(11) DEFAULT NULL,
                            `local_dir` varchar(255) COLLATE latin1_general_cs DEFAULT NULL,
                            `cid` varchar(255) COLLATE latin1_general_cs DEFAULT NULL,
                            `lock_ip` varchar(15) COLLATE latin1_general_cs DEFAULT NULL,
                            `lock_timestamp` bigint(20) DEFAULT NULL,
-                           `serving_tool` int(11) NOT NULL DEFAULT '0',
-                           `specification` int(11) NOT NULL,
-                           `canary_spec` int(11) DEFAULT NULL,
                            `canary_traffic_percentage`  TINYINT DEFAULT NULL,
                            `kafka_topic_id` int(11) DEFAULT NULL,
                            `inference_logging` int(11) DEFAULT NULL,
-                           `model_server` int(11) NOT NULL DEFAULT '0',
                            `serving_tool` int(11) NOT NULL DEFAULT '0',
                            `deployed` timestamp DEFAULT NULL,
                            `deployed_by` int(11) DEFAULT NULL,
@@ -1279,10 +1274,7 @@ CREATE TABLE `serving` (
                            CONSTRAINT `user_fk_serving` FOREIGN KEY (`creator`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE NO ACTION,
                            CONSTRAINT `deployed_by_fk_serving` FOREIGN KEY (`deployed_by`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE NO ACTION,
                            CONSTRAINT `kafka_fk` FOREIGN KEY (`kafka_topic_id`) REFERENCES `project_topics` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
-                           CONSTRAINT unique_specification UNIQUE (specification),
-                           CONSTRAINT unique_canary_spec UNIQUE (canary_spec),
-                           CONSTRAINT `specification_fk` FOREIGN KEY (`specification`) REFERENCES `serving_spec` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-                           CONSTRAINT `canary_spec_fk` FOREIGN KEY (`canary_spec`) REFERENCES `serving_spec` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+                           CONSTRAINT `FK_284_315` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=ndbcluster DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1294,6 +1286,7 @@ CREATE TABLE `serving` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `serving_spec` (
                                 `id` int(11) NOT NULL AUTO_INCREMENT,
+                                `serving_id` int(11) NOT NULL,
                                 `model_path` varchar(255) COLLATE latin1_general_cs NOT NULL,
                                 `artifact_version` int(11) DEFAULT NULL,
                                 `predictor` varchar(255) COLLATE latin1_general_cs DEFAULT NULL,
@@ -1306,10 +1299,12 @@ CREATE TABLE `serving_spec` (
                                 `instances` int(11) NOT NULL DEFAULT '0',
                                 `transformer_instances` int(11) DEFAULT NULL,
                                 `model_server` int(11) NOT NULL DEFAULT '0',
-                                `revision` varchar(8) DEFAULT NULL,
                                 `predictor_resources` varchar(1000) COLLATE latin1_general_cs DEFAULT NULL,
                                 `transformer_resources` varchar(1000) COLLATE latin1_general_cs DEFAULT NULL,
-                                PRIMARY KEY (`id`)
+                                `canary_traffic_percentage` TINYINT DEFAULT NULL,
+                                PRIMARY KEY (`id`),
+                                KEY `serving_id` (`serving_id`),
+                                CONSTRAINT `serving_spec_serving_fk` FOREIGN KEY (`serving_id`) REFERENCES `serving` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=ndbcluster DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

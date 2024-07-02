@@ -47,6 +47,34 @@ ALTER TABLE `hopsworks`.`serving` ADD KEY `deployed_by_fk` (`deployed_by`);
 ALTER TABLE `hopsworks`.`serving` ADD CONSTRAINT `deployed_by_fk_serving` FOREIGN KEY (`deployed_by`) REFERENCES `users` (`uid`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 -- HWORKS-927
+CREATE TABLE `serving_spec` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `serving_id` int(11) NOT NULL,
+    `model_path` varchar(255) COLLATE latin1_general_cs NOT NULL,
+    `artifact_version` int(11) DEFAULT NULL,
+    `predictor` varchar(255) COLLATE latin1_general_cs DEFAULT NULL,
+    `transformer` varchar(255) COLLATE latin1_general_cs DEFAULT NULL,
+    `model_name` varchar(255) COLLATE latin1_general_cs NOT NULL,
+    `model_version` int(11) NOT NULL,
+    `model_framework` int(11) NOT NULL,
+    `batching_configuration` varchar(255) COLLATE latin1_general_cs DEFAULT NULL,
+    `optimized` tinyint(4) NOT NULL DEFAULT '0',
+    `instances` int(11) NOT NULL DEFAULT '0',
+    `transformer_instances` int(11) DEFAULT NULL,
+    `model_server` int(11) NOT NULL DEFAULT '0',
+    `predictor_resources` varchar(1000) COLLATE latin1_general_cs DEFAULT NULL,
+    `transformer_resources` varchar(1000) COLLATE latin1_general_cs DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `serving_id` (`serving_id`),
+    CONSTRAINT `serving_spec_serving_fk` FOREIGN KEY (`serving_id`) REFERENCES `serving` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=ndbcluster DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
+
+/*
+
+// TODO: Migrations. Insert serving values into serving spec table
+
+*/
+
 ALTER TABLE `hopsworks`.`serving`
     DROP COLUMN `model_path`,
     DROP COLUMN `artifact_version`,
@@ -63,31 +91,4 @@ ALTER TABLE `hopsworks`.`serving`
     DROP COLUMN `predictor_resources`,
     DROP COLUMN `transformer_resources`;
 
-ALTER TABLE `hopsworks`.`serving` ADD COLUMN `specification` int(11) NOT NULL,
-                                  ADD COLUMN `canary_spec` int(11) DEFAULT NULL,
-                                  ADD COLUMN `canary_traffic_percentage`  TINYINT DEFAULT NULL;
-ALTER TABLE `hopsworks`.`serving` ADD CONSTRAINT unique_specification UNIQUE (specification);
-ALTER TABLE `hopsworks`.`serving` ADD CONSTRAINT unique_canary_spec UNIQUE (canary_spec);
-
-CREATE TABLE `serving_spec` (
-                                `id` int(11) NOT NULL AUTO_INCREMENT,
-                                `model_path` varchar(255) COLLATE latin1_general_cs NOT NULL,
-                                `artifact_version` int(11) DEFAULT NULL,
-                                `predictor` varchar(255) COLLATE latin1_general_cs DEFAULT NULL,
-                                `transformer` varchar(255) COLLATE latin1_general_cs DEFAULT NULL,
-                                `model_name` varchar(255) COLLATE latin1_general_cs NOT NULL,
-                                `model_version` int(11) NOT NULL,
-                                `model_framework` int(11) NOT NULL,
-                                `batching_configuration` varchar(255) COLLATE latin1_general_cs DEFAULT NULL,
-                                `optimized` tinyint(4) NOT NULL DEFAULT '0',
-                                `instances` int(11) NOT NULL DEFAULT '0',
-                                `transformer_instances` int(11) DEFAULT NULL,
-                                `model_server` int(11) NOT NULL DEFAULT '0',
-                                `revision` varchar(8) DEFAULT NULL,
-                                `predictor_resources` varchar(1000) COLLATE latin1_general_cs DEFAULT NULL,
-                                `transformer_resources` varchar(1000) COLLATE latin1_general_cs DEFAULT NULL,
-                                PRIMARY KEY (`id`)
-) ENGINE=ndbcluster DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
-
-ALTER TABLE `hopsworks`.`serving` ADD CONSTRAINT `specification_fk` FOREIGN KEY (`specification`) REFERENCES `serving_spec` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
-ALTER TABLE `hopsworks`.`serving` ADD CONSTRAINT `canary_spec_fk` FOREIGN KEY (`canary_spec`) REFERENCES `serving_spec` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+ALTER TABLE `hopsworks`.`serving` ADD COLUMN `canary_traffic_percentage`  TINYINT DEFAULT NULL;
