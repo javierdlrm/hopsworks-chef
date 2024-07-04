@@ -1257,7 +1257,6 @@ CREATE TABLE `serving` (
                            `cid` varchar(255) COLLATE latin1_general_cs DEFAULT NULL,
                            `lock_ip` varchar(15) COLLATE latin1_general_cs DEFAULT NULL,
                            `lock_timestamp` bigint(20) DEFAULT NULL,
-                           `canary_traffic_percentage`  TINYINT DEFAULT NULL,
                            `kafka_topic_id` int(11) DEFAULT NULL,
                            `inference_logging` int(11) DEFAULT NULL,
                            `serving_tool` int(11) NOT NULL DEFAULT '0',
@@ -1265,6 +1264,7 @@ CREATE TABLE `serving` (
                            `deployed_by` int(11) DEFAULT NULL,
                            `revision` varchar(8) DEFAULT NULL,
                            `api_protocol` TINYINT(1) NOT NULL DEFAULT '0',
+                           `canary_traffic_percent` TINYINT(3) DEFAULT NULL,
                            PRIMARY KEY (`id`),
                            UNIQUE KEY `Serving_Constraint` (`project_id`,`name`),
                            KEY `user_fk` (`creator`),
@@ -1301,9 +1301,10 @@ CREATE TABLE `serving_spec` (
                                 `model_server` int(11) NOT NULL DEFAULT '0',
                                 `predictor_resources` varchar(1000) COLLATE latin1_general_cs DEFAULT NULL,
                                 `transformer_resources` varchar(1000) COLLATE latin1_general_cs DEFAULT NULL,
-                                `canary_traffic_percentage` TINYINT DEFAULT NULL,
+                                `is_candidate` TINYINT(1) NOT NULL DEFAULT '0',
                                 PRIMARY KEY (`id`),
                                 KEY `serving_id` (`serving_id`),
+                                UNIQUE KEY `canary_constraint` (`serving_id`,`is_candidate`),
                                 CONSTRAINT `serving_spec_serving_fk` FOREIGN KEY (`serving_id`) REFERENCES `serving` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=ndbcluster DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
 /*!40101 SET character_set_client = @saved_cs_client */;

@@ -64,8 +64,10 @@ CREATE TABLE `serving_spec` (
     `model_server` int(11) NOT NULL DEFAULT '0',
     `predictor_resources` varchar(1000) COLLATE latin1_general_cs DEFAULT NULL,
     `transformer_resources` varchar(1000) COLLATE latin1_general_cs DEFAULT NULL,
+    `is_candidate` TINYINT(1) NOT NULL DEFAULT '0',
     PRIMARY KEY (`id`),
     KEY `serving_id` (`serving_id`),
+    UNIQUE KEY `canary_constraint` (`serving_id`,`is_candidate`),
     CONSTRAINT `serving_spec_serving_fk` FOREIGN KEY (`serving_id`) REFERENCES `serving` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=ndbcluster DEFAULT CHARSET=latin1 COLLATE=latin1_general_cs;
 
@@ -91,4 +93,4 @@ ALTER TABLE `hopsworks`.`serving`
     DROP COLUMN `predictor_resources`,
     DROP COLUMN `transformer_resources`;
 
-ALTER TABLE `hopsworks`.`serving` ADD COLUMN `canary_traffic_percentage`  TINYINT DEFAULT NULL;
+ALTER TABLE `hopsworks`.`serving` ADD COLUMN `canary_traffic_percent` TINYINT(3) DEFAULT NULL;
