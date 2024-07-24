@@ -1077,6 +1077,10 @@ attribute "hopsworks/enable_feature_monitoring",
         :description => "Whether to enable feature monitoring with scheduling and alerting. Default is false.",
         :type => 'string'
 
+attribute "hopsworks/feature_monitoring_max_num_features",
+        :description => "Maximum number of features to be monitored in a single feature monitoring configuration.",
+        :type => 'string'
+
 attribute "hopsworks/library_install_timeout_minutes",
 					:description => "Time in minutes before the library install operation times out. Default 60.",
 					:type => 'string'
