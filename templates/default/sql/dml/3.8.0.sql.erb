@@ -16,3 +16,6 @@ REPLACE INTO `hopsworks`.`variables`(`id`, `value`, `visibility`) VALUES ("servi
 REPLACE INTO `hopsworks`.`variables`(`id`, `value`, `visibility`) VALUES ("serving_state_manager_enabled", "<%= node['serving']['state_manager_enabled'] %>", 1);
 REPLACE INTO `hopsworks`.`variables`(`id`, `value`, `visibility`) VALUES ("serving_state_manager_batch_size", "<%= node['serving']['state_manager_batch_size'] %>", 1);
 REPLACE INTO `hopsworks`.`variables`(`id`, `value`, `visibility`) VALUES ("serving_state_manager_interval_ms", "<%= node['serving']['state_manager_interval_ms'] %>", 1);
+
+-- FSTORE-1412
+REPLACE INTO `hopsworks`.`variables`(`id`, `value`, `visibility`) VALUES ("feature_monitoring_max_num_features", "<%= node['hopsworks']['feature_monitoring_max_num_features'] %>", 1);

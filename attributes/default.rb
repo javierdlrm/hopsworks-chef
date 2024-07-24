@@ -554,6 +554,7 @@ default['hopsworks']['statistics']['statistics_cleaner_interval_ms'] = "900000"
 ## Feature Monitoring
 ##
 default['hopsworks']['enable_feature_monitoring'] = "false"
+default['hopsworks']['feature_monitoring_max_num_features'] = 15
 
 default['hopsworks']['library_install_timeout_minutes'] = 60
 
